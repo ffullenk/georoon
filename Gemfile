@@ -38,3 +38,4 @@ gem 'jquery-rails'
 # gem 'debugger'
 
 gem "bootstrap-sass", ">= 2.1.0.0"
+gem "therubyracer", ">= 0.10.2", :group => :assets, :platform => :ruby
