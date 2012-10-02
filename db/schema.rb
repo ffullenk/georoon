@@ -11,6 +11,37 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 0) do
+ActiveRecord::Schema.define(:version => 20120922011348) do
+
+  create_table "locations", :force => true do |t|
+    t.string   "address"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.boolean  "gmaps"
+    t.string   "city"
+    t.boolean  "internet"
+    t.boolean  "lavadora"
+    t.boolean  "cocina"
+    t.boolean  "tvcable"
+    t.text     "detalle"
+    t.integer  "tpieza_id"
+    t.boolean  "banioprivado"
+    t.boolean  "amueblada"
+    t.boolean  "portero"
+    t.boolean  "estacionamiento"
+    t.boolean  "balconpatio"
+    t.boolean  "gimnasio"
+    t.boolean  "ascensor"
+    t.boolean  "telefono"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.float    "precio"
+  end
+
+  create_table "tpiezas", :force => true do |t|
+    t.string   "nombre"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
 end

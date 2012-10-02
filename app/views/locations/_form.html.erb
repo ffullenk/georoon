@@ -1,0 +1,84 @@
+<%= simple_form_for(@location, :html => { :class => 'well form-horizontal' }) do |f| %>
+
+<% if notification = f.error_notification %>
+    <div class="alert alert-error fade in">
+      <a class="close" data-dismiss="alert" href="#">&times;</a>
+      <%= notification %>
+    </div>
+  <% end %>
+  
+  <%= f.label :address, "Dirección" %>
+  <%= f.text_field :address, :input_html => { :class => "span6" } %>
+
+  	<label class="checkbox">
+     <%= f.check_box :portero %> Portero
+    </label>
+
+
+	<label class="checkbox">
+     <%= f.check_box :portero %> Portero
+    </label>
+    
+    	<label class="checkbox">
+     <%= f.check_box :internet %> Internet
+    </label>
+    <br/>
+    	<label class="checkbox">
+     <%= f.check_box :lavadora %> Lavadora
+    </label>
+    	<label class="checkbox">
+     <%= f.check_box :cocina %> Cocina
+    </label>
+
+	<label class="checkbox">
+     <%= f.check_box :tvcable %> Tvcable
+    </label>
+  <br/>
+ 
+  
+	<label class="checkbox">
+     <%= f.check_box :banioprivado %> Baño privado
+    </label>
+    
+    <label class="checkbox">
+     <%= f.check_box :amueblada %> Amueblada
+    </label>
+    
+    <label class="checkbox">
+     <%= f.check_box :portero %> Portero
+    </label>
+    
+    <br/>
+    
+    <label class="checkbox">
+     <%= f.check_box :estacionamiento %> Estacionamiento
+    </label>
+    
+    <label class="checkbox">
+     <%= f.check_box :gimnasio %> Gimnasio
+    </label>
+    
+    <label class="checkbox">
+     <%= f.check_box :ascensor %> Ascensor
+    </label>
+    <br/>
+    
+    <label class="checkbox">
+     <%= f.check_box :telefono %> Teléfono
+    </label>
+
+    <%= f.label :tpieza_id, "Tipo de habitación" %>
+
+     <%= collection_select(:location, :tpieza_id, Tpieza.all, :id, :nombre) %>
+    <br/>
+ 
+     <%= f.label :detalle %>
+        <br/>
+ 
+    <%= f.text_area :detalle ,:rows=>10, :class=>"input-xxlarge" %>
+ 
+  <div class="actions">
+    <%= f.submit "Publicar", :class => "btn btn-primary" %>
+  </div>
+<% end %>
+

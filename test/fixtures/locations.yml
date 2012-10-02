@@ -1,0 +1,43 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  address: MyString
+  latitude: 1.5
+  longitude: 1.5
+  gmaps: false
+  city: MyString
+  internet: false
+  lavadora: false
+  cocina: false
+  tvcable: false
+  detalle: MyText
+  tpieza_id: 1
+  banioprivado: false
+  amueblada: false
+  portero: false
+  estacionamiento: false
+  balconpatio: false
+  gimnasio: false
+  ascensor: false
+  telefono: false
+
+two:
+  address: MyString
+  latitude: 1.5
+  longitude: 1.5
+  gmaps: false
+  city: MyString
+  internet: false
+  lavadora: false
+  cocina: false
+  tvcable: false
+  detalle: MyText
+  tpieza_id: 1
+  banioprivado: false
+  amueblada: false
+  portero: false
+  estacionamiento: false
+  balconpatio: false
+  gimnasio: false
+  ascensor: false
+  telefono: false

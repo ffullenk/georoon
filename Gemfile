@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-gem 'rails', '3.2.8'
+gem 'rails'
 gem 'sqlite3'
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
@@ -9,3 +9,7 @@ end
 gem 'jquery-rails'
 gem "bootstrap-sass", ">= 2.1.0.0"
 gem "therubyracer", ">= 0.10.2", :group => :assets, :platform => :ruby
+gem 'geocoder'
+gem 'gmaps4rails'
+gem 'simple_form'
+gem 'json'
