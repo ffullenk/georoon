@@ -13,3 +13,8 @@ gem 'geocoder'
 gem 'gmaps4rails'
 gem 'simple_form'
 gem 'json'
+
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'oauth2'
