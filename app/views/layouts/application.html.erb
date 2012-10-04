@@ -46,7 +46,7 @@
             <span class="icon-bar"></span>
           </a>
           
-        <a class="brand"><%= link_to "Georoom", root_path, :class=>"brand" %></a>
+        <a  class="brand"><%= link_to "Georoom", root_path, :class=>"brand", :id=>"logo" %></a>
           
         
           <div class="container-fluid nav-collapse">
@@ -97,27 +97,9 @@
       </div>
     </div>
 
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span3">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-              <li class="nav-header">Sidebar</li>
-              <li><%= link_to "Link1", "/path1"  %></li>
-              <li><%= link_to "Link2", "/path2"  %></li>
-              <li><%= link_to "Link3", "/path3"  %></li>
-            </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
-        <div class="span9">
-          <%= bootstrap_flash %>
-          <%= yield %>
-        </div>
-      </div><!--/row-->
+	<%= render 'layouts/sidebar' %>
 
-      <footer>
-        <p>&copy; Georoom 2012</p>
-      </footer>
+      <%= render 'layouts/footer' %>
 
     </div> <!-- /container -->
 

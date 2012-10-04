@@ -2,10 +2,11 @@
 class Location < ActiveRecord::Base
   delegate :url_helpers, to: 'Rails.application.routes' 
   has_one :tpieza
+  belongs_to :user
   attr_accessible :address, :amueblada, :ascensor, :balconpatio, :banioprivado,
                   :city, :cocina, :detalle, :estacionamiento, :gimnasio, :gmaps,
                   :internet, :latitude, :lavadora, :longitude, :portero, :telefono, :tpieza_id, :tvcable,
-                  :precio
+                  :precio, :user
   acts_as_gmappable :callback => :save_city
   
   geocoded_by :address   # can also be an IP address

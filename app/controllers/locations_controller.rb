@@ -69,7 +69,7 @@ class LocationsController < ApplicationController
   # POST /locations
   # POST /locations.json
   def create
-    @location = Location.new(params[:location])
+    @location = Location.new(params[:location].merge!(:user => current_user))
 
     respond_to do |format|
       if @location.save
