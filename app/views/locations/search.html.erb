@@ -1,22 +1,30 @@
 <h1><%= @locations.count %> Habitaciones cerca de <%= @query %></h1>
 
-<table>
-  <tr>
-    <th>Dirección</th>
-    <th>City</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Dirección</th>
+      <th>Ciudad</th>
+      <th>Precio</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @locations.each do |location| %>
+      <tr>
+      
+        <td><%= location.address %></td>
+        <td><%= location.city %></td>
+        <td><%= location.precio %></td>
 
-<% @locations.each do |location| %>
-  <tr>
-    <td><%= link_to location.address, location %></td>
-    <td><%= location.city %></td>
-    <td><%= link_to 'Ver', location %></td>
-    
-  </tr>
-<% end %>
+        <td>
+          <%= link_to "Revisar",
+                      location_path(location), :class => 'btn btn-mini' %>
+        
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
 
 <br />

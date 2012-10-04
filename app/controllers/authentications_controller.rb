@@ -6,7 +6,7 @@ class AuthenticationsController < ApplicationController
   # Try to find authentication first
   authentication = Authentication.find_by_provider_and_uid(auth['provider'], auth['uid'])
  
-  if authentication
+  if authentication && authentication.user.present?
     # Authentication found, sign the user in.
     flash[:notice] = "Ingreso exitoso."
     sign_in_and_redirect(:user, authentication.user)

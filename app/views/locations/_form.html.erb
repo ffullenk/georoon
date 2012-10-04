@@ -2,17 +2,12 @@
   <div class="control-group">
     <%= f.label "Dirección completa", :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :address, :class => 'text_field' %>
+      <%= f.text_field :address, :class => 'text_field', :placeholder=>'Portales 123, Valparaíso'  %>
     </div>
   </div>
  
   
-  <div class="control-group">
-    <%= f.label "Ciudad", :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :city, :class => 'text_field' %>
-    </div>
-  </div>
+ 
   <div class="control-group">
     <%= f.label "Internet", :class => 'control-label' %>
     <div class="controls ">
@@ -39,9 +34,10 @@
   </div>
   
   <div class="control-group">
-    <%= f.label :tpieza_id, :class => 'control-label' %>
+    <%= f.label "Tipo de habitación", :class => 'control-label' %>
     <div class="controls">
-      <%= f.number_field :tpieza_id, :class => 'number_field' %>
+     
+       <%= collection_select(:location, :tpieza_id, Tpieza.all, :id, :nombre) %>
     </div>
   </div>
   <div class="control-group">

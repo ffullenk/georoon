@@ -46,7 +46,9 @@
             <span class="icon-bar"></span>
           </a>
           
-          <a class="brand" href="#">Georoom</a>
+        <a class="brand"><%= link_to "Georoom", root_path, :class=>"brand" %></a>
+          
+        
           <div class="container-fluid nav-collapse">
             <ul class="nav">
               <li><%= link_to "Publicar", new_location_path  %></li>
@@ -114,7 +116,7 @@
       </div><!--/row-->
 
       <footer>
-        <p>&copy; Company 2012</p>
+        <p>&copy; Georoom 2012</p>
       </footer>
 
     </div> <!-- /container -->
