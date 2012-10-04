@@ -1,6 +1,6 @@
 <h1>Buscar</h1>
 
-<%= simple_form_for @location do |f| %>
-  <%= f.input :address, :label => 'cerca de' %>
-  <%= f.button :submit %>
+<%= form_for @location do |f| %>
+  <%= f.text_field :address, :label => 'cerca de' %>
+  <%= f.submit :submit %>
 <% end %>

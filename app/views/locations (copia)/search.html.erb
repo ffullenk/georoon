@@ -1,0 +1,24 @@
+<h1><%= @locations.count %> Habitaciones cerca de <%= @query %></h1>
+
+<table>
+  <tr>
+    <th>Dirección</th>
+    <th>City</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @locations.each do |location| %>
+  <tr>
+    <td><%= link_to location.address, location %></td>
+    <td><%= location.city %></td>
+    <td><%= link_to 'Ver', location %></td>
+    
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= gmaps4rails(@json) %> 

@@ -1,5 +1,5 @@
-<h1>Agrega tu publicación</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Atrás', locations_path, :class=>"btn" %>
+<%- model_class = Location -%>
+<div class="page-header">
+  <h1>Nueva habitación</h1>
+</div>
+<%= render :partial => 'form' %>

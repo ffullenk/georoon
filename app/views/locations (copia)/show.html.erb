@@ -1,0 +1,109 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Dirección:</b>
+  <%= @location.address %>
+</p>
+
+<p>
+  <b>City:</b>
+  <%= @location.city %>
+</p>
+
+<p>
+  <b>Internet:</b>
+  <%= @location.internet %>
+</p>
+
+<p>
+  <b>Lavadora:</b>
+  <%= @location.lavadora %>
+</p>
+
+<p>
+  <b>Cocina:</b>
+  <%= @location.cocina %>
+</p>
+
+<p>
+  <b>Tvcable:</b>
+  <%= @location.tvcable %>
+</p>
+
+<p>
+  <b>Detalle:</b>
+  <%= @location.detalle %>
+</p>
+
+<p>
+  <b>Tipo de Habitación:</b>
+  <%= @location.tpieza_id %>
+</p>
+
+<p>
+  <b>Baño privado:</b>
+  <%= @location.banioprivado %>
+</p>
+
+<p>
+  <b>Amueblada:</b>
+  <%= @location.amueblada %>
+</p>
+
+<p>
+  <b>Portero:</b>
+  <%= @location.portero %>
+</p>
+
+<p>
+  <b>Estacionamiento:</b>
+  <%= @location.estacionamiento %>
+</p>
+
+<p>
+  <b>Balcon/patio:</b>
+  <%= @location.balconpatio %>
+</p>
+
+<p>
+  <b>Gimnasio:</b>
+  <%= @location.gimnasio %>
+</p>
+
+<p>
+  <b>Ascensor:</b>
+  <%= @location.ascensor %>
+</p>
+
+<p>
+  <b>Teléfono:</b>
+  <%= @location.telefono %>
+</p>
+
+
+
+<%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@location.latitude}%2C#{@location.longitude}" %>
+
+<% if @location.nearbys(10).count > 0 %>
+
+<h3>Habitaciones cerca</h3>
+<ul>
+<% for location in @location.nearbys(10) %>
+  <li><%= link_to location.address, location %> (<%= location.distance.round(2) %> miles)</li>
+<% end %>
+<% end %>
+</ul>
+<% @places.each do |place| %>
+  <tr>
+
+    <td><%= place["name"] %></td>
+    <td><%= @location.distance_to(place["name"]) %></td>
+  </tr>
+  <br/>
+<% end %>
+
+
+<%= link_to 'Editar', edit_location_path(@location), :class=>"btn" %>
+<%= link_to 'Atrás', locations_path, :class=>"btn" %>
+
+<%= gmaps4rails(@json) %> 

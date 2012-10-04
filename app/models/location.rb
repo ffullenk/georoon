@@ -2,7 +2,8 @@ class Location < ActiveRecord::Base
   has_one :tpieza
   attr_accessible :address, :amueblada, :ascensor, :balconpatio, :banioprivado,
                   :city, :cocina, :detalle, :estacionamiento, :gimnasio, :gmaps,
-                  :internet, :latitude, :lavadora, :longitude, :portero, :telefono, :tpieza_id, :tvcable
+                  :internet, :latitude, :lavadora, :longitude, :portero, :telefono, :tpieza_id, :tvcable,
+                  :precio
   acts_as_gmappable
   
   geocoded_by :address   # can also be an IP address
