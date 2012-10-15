@@ -12,6 +12,27 @@ class Location < ActiveRecord::Base
   geocoded_by :address   # can also be an IP address
   after_validation :geocode, :if => :address_changed?
   
+  searchable do
+    string :address
+    text :detalle
+    boolean :amueblada
+    boolean :ascensor
+    boolean :balconpatio
+    boolean :banioprivado
+    boolean :cocina
+    boolean :estacionamiento
+    boolean :gimnasio
+    boolean :internet
+    boolean :lavadora
+    boolean :portero
+    boolean :precio
+    boolean :tvcable
+    integer :tpieza_id
+    boolean :telefono
+  end
+    
+  
+  
   def url
     url_helpers.location_path(self)
   end

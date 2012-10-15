@@ -1,6 +1,9 @@
 <h1>Buscar</h1>
 
-<%= form_for @location do |f| %>
-  <%= f.text_field :address, :label => 'cerca de' %>
-  <%= f.submit :submit %>
+<%= form_tag locations_path, :method => :get do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= check_box_tag "amueblada", params[:amueblada]%>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
 <% end %>

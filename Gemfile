@@ -18,3 +18,7 @@ gem 'omniauth-facebook'
 gem 'oauth2'
 
 gem "twitter-bootstrap-rails"
+
+gem 'sunspot_rails'
+gem 'sunspot_solr'
+gem 'progress_bar'

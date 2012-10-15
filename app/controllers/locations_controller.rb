@@ -3,23 +3,31 @@ class LocationsController < ApplicationController
     before_filter :authenticate_user!, :only => [:new, :create, :edit, :destroy, :update]
   # GET /locations
   # GET /locations.json
-  
-  def buscar
-    @location = Location.new
 
+  def buscar
+    
+    @search = Location.search do  
+      fulltext params[:search]
+      with(:amueblada, params[:amueblada]) if params[:amueblada].present?
+      end  
+    
+    @locations = @search.results
+    @json = @locations.to_gmaps4rails
+    
   end
+  
   
   def search
     
-     if params[:search].present?
-      @locations = Location.near(params[:search], 10, :order => :distance)
-      @query = params[:search]
-      @json = @locations.to_gmaps4rails
-      else
-        redirect_to locations_path
-      end
+     
+    @search = Location.search do  
+      fulltext params[:search]  
+    end  
     
+    @locations = @search.results
+    @json = @locations.to_gmaps4rails
   end
+  
   def index
     if params[:search].present?
     @locations = Location.near(params[:search], 10, :order => :distance)
