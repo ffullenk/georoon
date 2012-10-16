@@ -1,43 +1,40 @@
 # encoding: UTF-8
 class LocationsController < ApplicationController
-    before_filter :authenticate_user!, :only => [:new, :create, :edit, :destroy, :update]
+  before_filter :authenticate_user!, :only => [:new, :create, :edit, :destroy, :update]
   # GET /locations
   # GET /locations.json
-
   def buscar
-    
-    @search = Location.search do  
+
+    @search = Location.search do
       fulltext params[:search]
       with(:amueblada, params[:amueblada]) if params[:amueblada].present?
-      end  
-    
+      end
+
     @locations = @search.results
     @json = @locations.to_gmaps4rails
-    
+
   end
-  
-  
+
   def search
-    
-     
-    @search = Location.search do  
-      fulltext params[:search]  
-    end  
-    
+
+    @search = Location.search do
+      keywords params[:search]
+    end
+    @query = params[:search]
     @locations = @search.results
     @json = @locations.to_gmaps4rails
   end
-  
+
   def index
     if params[:search].present?
-    @locations = Location.near(params[:search], 10, :order => :distance)
-    
+      @locations = Location.near(params[:search], 10, :order => :distance)
+
     else
-   
-      @locations = Location.all
+      @geopos = Geokit::Geocoders::MultiGeocoder.geocode('181.160.166.91')
+
+      @locations = Location.near(@geopos.city, 10, :order => :distance)
     end
-    
-    
+
     @json = @locations.to_gmaps4rails
 
     respond_to do |format|
@@ -51,17 +48,16 @@ class LocationsController < ApplicationController
   def show
     @location = Location.find(params[:id])
     @places = Gmaps4rails.places(@location.latitude,@location.longitude, 'AIzaSyB0VQ_kPLS7ReH8A1lxKAz5AM-5qkfeods',keyword = nil, 100, 'es', true)["results"]
-   
-    #= Gmaps4rails.places(@location.latitude,@location.longitude, "AIzaSyB0VQ_kPLS7ReH8A1lxKAz5AM-5qkfeods")
-    
-  
-    
+
+  #= Gmaps4rails.places(@location.latitude,@location.longitude, "AIzaSyB0VQ_kPLS7ReH8A1lxKAz5AM-5qkfeods")
+
   end
 
   # GET /locations/new
   # GET /locations/new.json
   def new
     @location = Location.new
+    @json = @location.to_gmaps4rails
 
     respond_to do |format|
       format.html # new.html.erb

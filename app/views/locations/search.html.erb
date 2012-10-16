@@ -1,5 +1,6 @@
 <h1><%= @locations.count %> Habitaciones cerca de <%= @query %></h1>
 
+<% if @locations.count >0 %>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -10,6 +11,7 @@
     </tr>
   </thead>
   <tbody>
+ <%end %> 
     <% @locations.each do |location| %>
       <tr>
       
@@ -28,5 +30,6 @@
 </table>
 
 <br />
-
+<% if @locations.count >0 %>
 <%= gmaps4rails(@json) %> 
+ <%end %> 

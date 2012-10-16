@@ -1,6 +1,7 @@
+<%=  %>
 <%- model_class = Location -%>
 <div class="page-header">
-  <h1>Habitaciones cerca tuyo</h1>
+  <h1>Habitaciones cerca de <%= @geopos.city  %></h1>
 </div>
 <table class="table table-striped">
   <thead>
@@ -31,5 +32,5 @@
 
 
 
-<%= gmaps(:markers => {:data => @json, :options => { :raw => '{ animation: google.maps.Animation.NONE }' } },
+<%= gmaps(:markers => {:data => @json, :options => { :raw => '{ animation: google.maps.Animation.NONE }', :center_on_user=> true, :detect_location => true } },
           :map_options => { "libraries" => ["places"] })%> 

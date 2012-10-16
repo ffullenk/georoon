@@ -1,107 +1,171 @@
 <%= form_for @location, :html => { :class => 'form-horizontal' } do |f| %>
+
+       <div class="row">   
   <div class="control-group">
     <%= f.label "Dirección completa", :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :address, :class => 'text_field', :placeholder=>'Portales 123, Valparaíso'  %>
+      <%= f.text_field :address, :class => 'text_field', :placeholder=>'Portales 123, Valparaíso', :class=>"span5"  %>
     </div>
   </div>
- 
-  
- 
-  <div class="control-group">
-    <%= f.label "Internet", :class => 'control-label' %>
-    <div class="controls ">
-      <%= f.check_box :internet, :class => 'check_box ' %>
+   </div>
+  <div class="row">
+        <div class="span2">
+          
+          <div class="control-group">
+		    <%= f.label "Internet", :class => 'control-label' %>
+		    <div class="controls ">
+		      <%= f.check_box :internet, :class => 'check_box ' %>
+		    </div>
+		  </div>
+          </div>
+        
+        
+        
+        <div class="span2">
+          	
+          	<div class="control-group">
+		    <%= f.label "Cocina", :class => 'control-label' %>
+		    <div class="controls">
+		      <%= f.check_box :cocina, :class => 'check_box' %>
+		    </div>
+  			</div>
+         </div>
+       
+              
+        <div class="span2">
+          <div class="control-group">
+		    <%= f.label "Lavadora", :class => 'control-label' %>
+		    <div class="controls">
+		      <%= f.check_box :lavadora, :class => 'check_box' %>
+		    </div>
+		  </div>
+        </div>
+               </div> 
+       <div class="row">   
+        
+        <div class="span2">
+        
+         <div class="control-group">
+		    <%= f.label "Tvcable", :class => 'control-label' %>
+		    <div class="controls">
+		      <%= f.check_box :tvcable, :class => 'check_box' %>
+		    </div>
+		  </div>
     </div>
-  </div>
-  <div class="control-group">
-    <%= f.label "Lavadora", :class => 'control-label' %>
-    <div class="controls">
-      <%= f.check_box :lavadora, :class => 'check_box' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label "Cocina", :class => 'control-label' %>
-    <div class="controls">
-      <%= f.check_box :cocina, :class => 'check_box' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label "Tvcable", :class => 'control-label' %>
-    <div class="controls">
-      <%= f.check_box :tvcable, :class => 'check_box' %>
-    </div>
-  </div>
-  
-  <div class="control-group">
-    <%= f.label "Tipo de habitación", :class => 'control-label' %>
-    <div class="controls">
-     
-       <%= collection_select(:location, :tpieza_id, Tpieza.all, :id, :nombre) %>
-    </div>
-  </div>
+    
+    
+  <div class="span2">
   <div class="control-group">
     <%= f.label "Baño privado", :class => 'control-label' %>
     <div class="controls">
       <%= f.check_box :banioprivado, :class => 'check_box' %>
     </div>
   </div>
-  <div class="control-group">
+      </div>
+  
+  
+  <div class="span2">
+    <div class="control-group">
     <%= f.label "Amoblado", :class => 'control-label' %>
     <div class="controls">
       <%= f.check_box :amueblada, :class => 'check_box' %>
     </div>
   </div>
+        </div>
+        
+        </div> 
+       <div class="row">     
+        
+  <div class="span2">
   <div class="control-group">
     <%= f.label "Portero", :class => 'control-label' %>
     <div class="controls">
       <%= f.check_box :portero, :class => 'check_box' %>
     </div>
   </div>
+        </div>
+        
+        
+  <div class="span2">
   <div class="control-group">
     <%= f.label "Estacionamiento", :class => 'control-label' %>
     <div class="controls">
       <%= f.check_box :estacionamiento, :class => 'check_box' %>
     </div>
   </div>
+        </div>
+  <div class="span2">
   <div class="control-group">
     <%= f.label "Balcón/patio", :class => 'control-label' %>
     <div class="controls">
       <%= f.check_box :balconpatio, :class => 'check_box' %>
     </div>
   </div>
+        </div>
+          </div> 
+          
+       <div class="row">   
+       
+       
+  <div class="span2">
   <div class="control-group">
     <%= f.label "Gimnasio", :class => 'control-label' %>
     <div class="controls">
       <%= f.check_box :gimnasio, :class => 'check_box' %>
     </div>
   </div>
+        </div>
+  <div class="span2">
   <div class="control-group">
     <%= f.label "Ascensor", :class => 'control-label' %>
     <div class="controls">
       <%= f.check_box :ascensor, :class => 'check_box' %>
     </div>
   </div>
+        </div>
+  <div class="span2">
   <div class="control-group">
     <%= f.label "Teléfono", :class => 'control-label' %>
     <div class="controls">
       <%= f.check_box :telefono, :class => 'check_box' %>
     </div>
   </div>
+        </div>      
+        
+        
+        
+      </div>
+ 
+         <div class="row">  
   <div class="control-group">
-    <%= f.label "Precio", :class => 'control-label' %>
-    <div class=" input-prepend input-append">
-      <span class="add-on">$</span><%= f.text_field :precio, :class => 'text_field span3' %><span class="add-on">pesos</span>
+    <%= f.label "Tipo de habitación", :class => 'control-label' %>
+    <div class="controls">
+     
+       <%= collection_select(:location, :tpieza_id, Tpieza.all, :id, :nombre,
+		{:include_blank => false}, {:class => 'dropdown-toggle'}) %>
     </div>
   </div>
   
+   </div>
+   
+            <div class="row">  
+  <div class="control-group">
+    <%= f.label "Precio", :class => 'control-label' %>
+    <div class=" input-prepend input-append span7">
+      <span class="add-on">$</span><%= f.text_field :precio, :class => 'text_field span3' %><span class="add-on">pesos</span>
+    </div>
+  </div>
+    </div>
+    
+                <div class="row">  
   <div class="control-group">
     <%= f.label "Detalle", :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_area :detalle, :class => 'text_area', :rows=>"3" %>
+      <%= f.text_area :detalle, :class => 'text_area span6', :rows=>"6", :placeholder=>"Ingresa una descripción o detalle de la habitación" %>
     </div>
   </div>
-
+  </div>
+  
   <div class="form-actions">
     <%= f.submit "Agregar", :class => 'btn btn-primary' %>
     <%= link_to "Cancelar",
