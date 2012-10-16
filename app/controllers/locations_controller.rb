@@ -5,10 +5,7 @@ class LocationsController < ApplicationController
   # GET /locations.json
   def buscar
 
-    @search = Location.search do
-      fulltext params[:search]
-      with(:amueblada, params[:amueblada]) if params[:amueblada].present?
-      end
+    @search = Location.near(params[:search], 10, :order => :distance)
 
     @locations = @search.results
     @json = @locations.to_gmaps4rails
@@ -17,11 +14,10 @@ class LocationsController < ApplicationController
 
   def search
 
-    @search = Location.search do
-      keywords params[:search]
-    end
+    @search = Location.near(params[:search], 10, :order => :distance)
+    
     @query = params[:search]
-    @locations = @search.results
+    @locations = @search
     @json = @locations.to_gmaps4rails
   end
 

@@ -19,8 +19,6 @@ gem 'oauth2'
 
 gem "twitter-bootstrap-rails"
 
-gem 'sunspot_rails'
-gem 'sunspot_solr'
 gem 'progress_bar'
 gem 'geokit-rails3'
 gem "paperclip", "~> 3.0"
