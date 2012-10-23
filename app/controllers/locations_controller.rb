@@ -26,7 +26,7 @@ class LocationsController < ApplicationController
       @locations = Location.near(params[:search], 10, :order => :distance)
 
     else
-      @geopos = Geokit::Geocoders::MultiGeocoder.geocode('181.160.166.91')
+      @geopos = Geokit::Geocoders::MultiGeocoder.geocode(request.ip)
 
       @locations = Location.near(@geopos.city, 10, :order => :distance)
     end
