@@ -16,7 +16,7 @@
     <% @locations.each do |location| %>
       <tr>
       
-        <td><%= location.address %></td>
+        <td><%= link_to location.address, location %></td>
         <td><%= location.city %></td>
         <td><%= location.precio %></td>
 

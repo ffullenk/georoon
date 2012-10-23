@@ -6,10 +6,23 @@
 <dl class="dl-horizontal">
 
   
-  
-  <dt><strong>Precio $</strong></dt>
+  <div class="row">
+        <div class="span2">
+          
+          <div class="control-group">
+          
+  <dt><strong>Precio $:</strong></dt>
   <dd><%= @location.precio %></dd>
 
+
+	  </div>
+          </div>
+          
+          
+          <div class="span2">
+          	
+          	<div class="control-group">
+          	
   <dt><strong>Internet:</strong></dt>
   <dd>
   <% if @location.internet%>
@@ -18,7 +31,13 @@
   	No
   <% end %>	
   </dd>
-  
+    </div>
+          </div>
+          
+     <div class="span2">
+          	
+          	<div class="control-group">
+          	      
   <dt><strong>Cocina:</strong></dt>
   <dd>
   <% if @location.cocina%>
@@ -27,7 +46,17 @@
   	No
   <% end %>	
   </dd>
-  
+     </div>
+          </div>
+          
+           </div>
+           
+           
+        <div class="row">
+        <div class="span2">
+          
+          <div class="control-group">   
+          
   <dt><strong>Tvcable:</strong></dt>
   <dd>
   <% if @location.tvcable%>
@@ -36,7 +65,13 @@
   	No
   <% end %>	
   </dd>
-  
+   </div>
+          
+           </div>
+         <div class="span2">
+          
+          <div class="control-group">        
+           
   <dt><strong>Baño privado:</strong></dt>
   <dd>
   <% if @location.banioprivado%>
@@ -45,7 +80,13 @@
   	No
   <% end %>	
   </dd>
-  
+   </div>
+          
+           </div>
+           
+        <div class="span2">
+          
+          <div class="control-group">             
   <dt><strong>Amoblado:</strong></dt>
   <dd>
   <% if @location.amueblada%>
@@ -55,7 +96,17 @@
   <% end %>	
   </dd>
   
-  
+   </div>
+          
+           </div>
+           
+         </div>
+         
+    <div class="row">
+        <div class="span2">
+          
+          <div class="control-group">         
+            
   <dt><strong>Portero:</strong></dt>
   <dd>
   <% if @location.portero%>
@@ -64,8 +115,14 @@
   	No
   <% end %>	
   </dd>
+    </div>
+           
+         </div>
   
-  
+  <div class="span2">
+          
+          <div class="control-group">       
+          
   <dt><strong>Estacionamiento:</strong></dt>
   <dd>
   <% if @location.estacionamiento%>
@@ -74,7 +131,13 @@
   	No
   <% end %>	
   </dd>
-  
+   </div>
+           
+         </div>
+         
+     <div class="span2">
+          
+          <div class="control-group">           
   <dt><strong>Balcón/patio:</strong></dt>
   <dd>
   <% if @location.balconpatio%>
@@ -83,7 +146,14 @@
   	No
   <% end %>	
   </dd>
-  
+    </div>
+         </div>   
+         </div>
+        <div class="row">
+        <div class="span2">
+          
+          <div class="control-group">   
+         
   <dt><strong>Gimnasio:</strong></dt>
   <dd>
   <% if @location.gimnasio%>
@@ -92,16 +162,14 @@
   	No
   <% end %>	
   </dd>
-  
-  <dt><strong>Estacionamiento:</strong></dt>
-  <dd>
-  <% if @location.estacionamiento%>
-  	Si
-  <% else %>	
-  	No
-  <% end %>	
-  </dd>
-  
+   </div>
+           
+         </div>
+    
+      <div class="span2">
+          
+          <div class="control-group">      
+               
   <dt><strong>Ascensor:</strong></dt>
   <dd>
   <% if @location.ascensor%>
@@ -110,7 +178,14 @@
   	No
   <% end %>	
   </dd>
-  
+   </div>
+           
+         </div>
+    
+          <div class="span2">
+          
+          <div class="control-group">      
+           
     <dt><strong>Teléfono:</strong></dt>
   <dd>
   <% if @location.telefono%>
@@ -119,18 +194,32 @@
   	No
   <% end %>	
   </dd>
-  
+   </div>
+            </div>   
+         </div>
+       <div class="row">
+        <div class="span6">
+          
+          <div class="control-group">     
+        
    <dt><strong>Detalle:</strong></dt>
   <dd>
   <% if @location.detalle!= ""%>
-  	@location.detalle
+  	<div class="controls">
+      <%= text_area :location, :detalle, :class => 'text_area',:rows => '4',:value => @location.detalle, :disabled=>"true"  %>
+    </div>
   <% else %>	
   	No hay información
   <% end %>	
   </dd>
-
+ </div>
+            </div>   
+         </div>
+         
+         
 </dl>
 <br/>
+
 <dl class="">
 
 <%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@location.latitude}%2C#{@location.longitude}", :class=> "img-polaroid" %>
