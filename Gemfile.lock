@@ -106,6 +106,7 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.4.0)
       mime-types
+    pg (0.14.1)
     polyglot (0.3.3)
     progress_bar (0.4.0)
       highline (~> 1.6.1)
@@ -179,6 +180,7 @@ DEPENDENCIES
   omniauth
   omniauth-facebook
   paperclip (~> 3.0)
+  pg
   progress_bar
   rails
   sass-rails (~> 3.2.3)
