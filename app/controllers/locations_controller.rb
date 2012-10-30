@@ -56,7 +56,7 @@ class LocationsController < ApplicationController
   def index
 
     
-    @geopos = Geokit::Geocoders::MultiGeocoder.geocode("158.251.4.48")
+    @geopos = Geokit::Geocoders::MultiGeocoder.geocode(request.ip)
     @locations = Location.near(@geopos.city, 10, :order => :distance)
     
     @filtros = ajustaFiltros
@@ -130,6 +130,7 @@ class LocationsController < ApplicationController
 
   #= Gmaps4rails.places(@location.latitude,@location.longitude, "AIzaSyB0VQ_kPLS7ReH8A1lxKAz5AM-5qkfeods")
 
+    
   end
   
   def precios(locations)
