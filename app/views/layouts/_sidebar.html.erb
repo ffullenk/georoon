@@ -1,26 +1,58 @@
-    <div class="container-fluid">
-      <div class="row-fluid">
+
+  
+  <% if @facets %>
         <div class="span3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
               <li class="nav-header">Filtros</li>
-              <li><%= link_to "Ascensor", "/path1"  %></li>
-              <li><%= link_to "Balcón/Patio", "/path2"  %></li>
-              <li><%= link_to "Baño Privado", "/path3"  %></li>
-              <li><%= link_to "Cocina", "/path3"  %></li>
-              <li><%= link_to "Estacionamiento", "/path3"  %></li>
-              <li><%= link_to "Gimnasio", "/path3"  %></li>
-              <li><%= link_to "Internet", "/path3"  %></li>
-              <li><%= link_to "Lavadora", "/path3"  %></li>
-              <li><%= link_to "Portero", "/path3"  %></li>
-              <li><%= link_to "Teléfono", "/path3"  %></li>
-              <li><%= link_to "TVcable", "/path3"  %></li>
+              
+              <% if @filtros.count >0 %>
+				<% @filtros.each do |key, value| %>
+						<% if ["1","2","3","4","5"].include?(key)%>
+							<a href="<%= url_for locations_path(:rmv => key)  %>" class="btn btn-inverse btn-small"><i class="icon-remove-sign "></i> <%= value %></a>
+						<% else%>
+							<% if @campos.include?(key)%>
+						<a href="<%= url_for locations_path(:rmv => key)  %>" class="btn btn-inverse btn-small"><i class="icon-remove-sign "></i> <%= @campos[key] %></a>
+						<%end%>
+						<%end%>
+						<br/>
+					<%end%>
+				<%end%>
+				<li class="divider"></li>
+
+               <% @facets.each do |key, value| %>
+						<% if @campos.include?(key)%>
+              		<li><%= link_to @campos[key]+" ("+value.to_s+")" , locations_path(:filtro => key) %></li>
+              		<%end%>
+             	<%end%>
+             	 <li class="divider"></li>  
+             	 <li class="nav-header">Precio</li>  
+             	 	
+             	 	<% @precios.each do |key, value| %>
+             	 		
+             	 		<% if key == "1"%>
+              				<li><%= link_to "Hasta $50.000 ("+value.to_s+")", locations_path(:precio => key) %></li>
+              			<%end%>
+              			
+              			<% if key == "2"%>
+              				<li><%= link_to "$50.000 a $100.000  ("+value.to_s+")", locations_path(:precio => key) %></li>
+              			<%end%>
+              			
+              			<% if key == "3"%>
+              				<li><%= link_to "$100.000 a $150.000 ("+value.to_s+")", locations_path(:precio => key) %></li>
+              			<%end%>
+              			
+              			<% if key == "4"%>
+              				<li><%= link_to "$150.000 a $200.000 ("+value.to_s+")", locations_path(:precio => key) %></li>
+              			<%end%>
+              			
+              			<% if key == "5"%>
+              				<li><%= link_to "Más de $200.000 ("+value.to_s+")", locations_path(:precio => key) %></li>
+              			<%end%>
+              		
+              		<%end%>
+            
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
-        <div class="span9">
-          <%= bootstrap_flash %>
-          <%= yield %>
-        </div>
-      </div><!--/row-->
-      
+      	<%end%>  

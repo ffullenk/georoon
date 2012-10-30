@@ -3,40 +3,123 @@ class LocationsController < ApplicationController
   before_filter :authenticate_user!, :only => [:new, :create, :edit, :destroy, :update]
   # GET /locations
   # GET /locations.json
-  def buscar
-
-    @search = Location.near(params[:search], 10, :order => :distance)
-
-    @locations = @search.results
-    @json = @locations.to_gmaps4rails
-
-  end
 
   def search
 
-    @search = Location.near(params[:search], 10, :order => :distance)
+    @search = Location.near(params[:search], 15, :order => :distance)
     
     @query = params[:search]
     @locations = @search
+    
+    @filtros = ajustaFiltros
+    @precios = precios(@locations)
+    @campos = self.campos
+    @facets = facetas(@locations, @filtros)
     @json = @locations.to_gmaps4rails
   end
 
-  def index
-    if params[:search].present?
-      @locations = Location.near(params[:search], 10, :order => :distance)
-
-    else
-      @geopos = Geokit::Geocoders::MultiGeocoder.geocode(request.ip)
-
-      @locations = Location.near(@geopos.city, 10, :order => :distance)
+  def ajustaFiltros
+    session[:filtros] ||= Hash.new
+    
+    if params[:rmv].present?
+      @filtro = params[:rmv]
+      
+      if session[:filtros].has_key?(@filtro)
+          session[:filtros].delete(@filtro)
+      end
+     end
+    
+    
+    if params[:filtro].present?
+      @filtro = params[:filtro]
+      
+      if !session[:filtros].has_key?(@filtro) 
+        session[:filtros][@filtro] = true
+      end
+      
     end
+    
+    
+    if params[:precio].present?
+      @filtro = params[:precio]
+        if !session[:filtros].has_key?(@filtro)
+       
+          session[:filtros][@filtro] = true
+      end
+    end
+    
+    @filtros = session[:filtros]
+    
+    return @filtros
+  end
+  
+  def index
 
+    
+    @geopos = Geokit::Geocoders::MultiGeocoder.geocode("158.251.4.48")
+    @locations = Location.near(@geopos.city, 10, :order => :distance)
+    
+    @filtros = ajustaFiltros
+    @facets = facetas(@locations, @filtros)
+    @locations = filtraLocations(@locations, @filtros)
+    @precios = precios(@locations)
     @json = @locations.to_gmaps4rails
-
+    @campos = self.campos
+    logger.debug @facets
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @locations }
     end
+  end
+  
+  def filtraLocations(locations, filtros)
+    tmp = Array.new  
+    
+    locations.each do |location|
+      flag = false
+      filtros.each do |key, value|
+          
+             if location.attributes[key] == true
+               flag = true
+             else
+               precio = location.precio
+               if precio <50000 && key == "1"
+                flag = true
+               else
+                 if precio >= 50000 && precio <100000 && key == "2"
+                  flag = true
+                  else
+                     if precio >= 100000 && precio <150000 && key == "3"
+                        flag = true
+                     else
+                       if precio >= 150000 && precio <200000 && key == "4"
+                        flag = true
+                        else
+                           if precio >=200000 && key == "5"
+                              flag = true
+                            else
+                              flag = false
+                           end
+                       end
+                     end
+                  end
+              end
+              end    
+
+
+             
+             
+         end
+      if flag == true
+        tmp.push(location)
+      end
+    end
+   
+   if tmp.count >0
+       locations = tmp
+   end
+   
+   return locations
   end
 
   # GET /locations/1
@@ -48,7 +131,109 @@ class LocationsController < ApplicationController
   #= Gmaps4rails.places(@location.latitude,@location.longitude, "AIzaSyB0VQ_kPLS7ReH8A1lxKAz5AM-5qkfeods")
 
   end
+  
+  def precios(locations)
+    @precios = Hash.new(0)
+    
+    locations.each do |location|
+      precio = location.precio
+      
+      if precio < 50000
+          @precios["1"] += 1
+      end
+      
+      if precio >= 50000 && precio <100000
+          @precios["2"] += 1
+        
+      end
+      
+      if precio >= 100000 && precio <150000
+          @precios["3"] += 1
 
+      end
+      
+      if precio >= 150000 && precio <200000
+          @precios["4"] += 1
+
+      end
+      
+      if precio >=200000
+          @precios["5"] += 1
+      end
+      
+    end
+    
+    @filtros.each do |key, value|
+      if key == "1"
+        @filtros[key] = "Hasta $50.000"
+      end
+         if key == "2"
+        @filtros[key] = "$50.000 a $100.000"
+      end
+         if key == "3"
+        @filtros[key] = "$100.000 a $150.000"
+      end
+         if key == "4"
+        @filtros[key] = "$150.000 a $200.000"
+      end
+      if key == "5"
+        @filtros[key] = "Más de $200.000"
+      end
+    end
+    
+
+    return @precios
+  end
+  
+  def campos
+    campos =  Hash.new
+    
+    campos.store("amueblada","Amoblado" )
+    campos.store("ascensor","Ascensor" )
+    campos.store("balconpatio","Balcón o Patio" )
+    campos.store("banioprivado","Baño privado" )
+    campos.store("cocina","Cocina" )
+    campos.store("estacionamiento","Estacionamiento" )
+    campos.store("gimnasio","Gimnasio" )
+    campos.store("internet","Internet" )
+    campos.store("lavadora","Lavadora" )
+    campos.store("portero","Portero" )
+    campos.store("telefono","Teléfono" )
+    campos.store("tvcable","TVcable" )
+  
+    return campos
+  end
+
+  def facetas(locations, filtros)
+    facets = Hash.new(0)
+    
+    campos = self.campos
+                      
+    locations.each do |location|
+       location.attributes.each_pair do |name, value|
+         if (campos.has_key? name) && (!filtros.has_key? name) 
+            if value == true
+                  facets[name] += 1
+          
+            end
+          end
+       end
+    end
+
+    return facets
+  end
+  
+  def precioMax(locations)
+    max = 0
+    locations.each do |location|
+      if location.precio > max
+        max = location.precio
+      end
+    end
+    return max
+  end
+
+  
   # GET /locations/new
   # GET /locations/new.json
   def new
