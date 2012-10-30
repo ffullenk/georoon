@@ -248,6 +248,13 @@
 
 </dl>
 
+<h3>Habitaciones cercanas</h3>
+<ul>
+<% for location in @location.nearbys(15) %>
+  <li><%= link_to location.address, location %> (<%= location.distance.round(2) %> kms)</li>
+<% end %>
+</ul>
+
 <div class="form-actions">
   <%= link_to "Volver",
               locations_path, :class => 'btn'  %>

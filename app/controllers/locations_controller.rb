@@ -56,7 +56,7 @@ class LocationsController < ApplicationController
   def index
 
     
-    @geopos = Geokit::Geocoders::MultiGeocoder.geocode(request.ip)
+    @geopos = Geokit::Geocoders::MultiGeocoder.geocode("158.251.4.48")
     @locations = Location.near(@geopos.city, 10, :order => :distance)
     
     @filtros = ajustaFiltros
