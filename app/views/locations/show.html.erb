@@ -251,7 +251,7 @@
 <h3>Habitaciones cercanas</h3>
 <ul>
 <% for location in @location.nearbys(15) %>
-  <li><%= link_to location.address, location %> (<%= location.distance.round(2) %> kms)</li>
+  <li><%= link_to location.address, location %> (<%= location.distance.to_f.round(2) %> kms)</li>
 <% end %>
 </ul>
 
