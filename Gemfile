@@ -29,5 +29,5 @@ gem "twitter-bootstrap-rails"
 
 gem 'progress_bar'
 gem 'geokit-rails3'
-gem "paperclip", "~> 3.0"
+
 gem "taps"
