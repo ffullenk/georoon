@@ -29,5 +29,5 @@ gem "twitter-bootstrap-rails"
 
 gem 'progress_bar'
 gem 'geokit-rails3'
-
+gem 'nokogiri'
 gem "taps"

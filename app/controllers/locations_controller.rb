@@ -56,7 +56,8 @@ class LocationsController < ApplicationController
   def index
 
     
-    @geopos = Geokit::Geocoders::MultiGeocoder.geocode("158.251.4.48")
+    #@geopos = Geokit::Geocoders::MultiGeocoder.geocode("158.251.4.48")
+    @geopos = Geokit::Geocoders::MultiGeocoder.geocode(request.ip)
     @locations = Location.near(@geopos.city, 10, :order => :distance)
     
     @filtros = ajustaFiltros
@@ -128,6 +129,18 @@ class LocationsController < ApplicationController
     @location = Location.find(params[:id])
     @places = Gmaps4rails.places(@location.latitude,@location.longitude, 'AIzaSyB0VQ_kPLS7ReH8A1lxKAz5AM-5qkfeods',keyword = nil, 100, 'es', true)["results"]
 
+    url = 'http://api.geonames.org/findNearby?lat=' + @location.latitude.to_s + '&lng=' + @location.longitude.to_s + '&username=ffullenk&radius=10'
+    doc = Nokogiri::XML(open(url))
+
+    @places = []
+    # Search for nodes by xpath
+    doc.xpath('//geoname').each do |geoname|
+      name = geoname.at_xpath("toponymName").content
+      distance = geoname.at_xpath("distance").content
+      place = Place.new(:name=>name,:distance=>distance)
+      @places.push(place)
+      
+    end
   #= Gmaps4rails.places(@location.latitude,@location.longitude, "AIzaSyB0VQ_kPLS7ReH8A1lxKAz5AM-5qkfeods")
 
     

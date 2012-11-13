@@ -1,6 +1,19 @@
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1&appId=316225008475265";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
 <%- model_class = @location.class -%>
 <div class="page-header">
 <h1><%= @location.address%></h1>
+
+<div class="fb-like" data-href=<%= location_url(@location)%> data-send="true" data-width="450" data-show-faces="true"></div>
+
 </div>
 
 <dl class="dl-horizontal">
@@ -240,8 +253,11 @@
          
          
 </dl>
-<br/>
 
+
+<br/>
+<div class="fb-comments" data-href=<%= location_url(@location)%> data-num-posts="4" data-width="470"></div>
+<br/>
 <dl class="">
 
 <%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@location.latitude}%2C#{@location.longitude}", :class=> "img-polaroid" %>
@@ -255,8 +271,18 @@
 <% end %>
 </ul>
 
+<br/>
+
+<h3>Lugares cercanos</h3>
+<ul>
+<% for place in @places %>
+  <li><%=  place.name %> (<%= place.distance.to_f.round(2) %> kms)</li>
+<% end %>
+</ul>
+
 <div class="form-actions">
   <%= link_to "Volver",
               locations_path, :class => 'btn'  %>
  
 </div>
+

@@ -82,6 +82,7 @@ GEM
     mime-types (1.19)
     multi_json (1.3.6)
     multipart-post (1.1.5)
+    nokogiri (1.5.5)
     oauth2 (0.8.0)
       faraday (~> 0.8)
       httpauth (~> 0.1)
@@ -179,6 +180,7 @@ DEPENDENCIES
   gmaps4rails
   jquery-rails
   json
+  nokogiri
   oauth2
   omniauth
   omniauth-facebook
