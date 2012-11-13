@@ -1,0 +1,67 @@
+
+<%- model_class = @place.class -%>
+<div class="page-header">
+<h1><%= @place.name%></h1>
+
+</div>
+
+<dl class="dl-horizontal">
+
+    
+        
+   <dt><strong>Detalle:</strong></dt>
+  <dd>
+    <%= @detalle %>
+  </dd>
+
+  <h3>Habitaciones cercanas</h3>
+<ul>
+<% for location in @locations %>
+  <li><%= link_to location.address, location %> (<%= location.distance.to_f.round(2) %> kms)</li>
+<% end %>
+</ul> 
+</dl>
+<h3>Imágenes del sector</h3>
+<div id="wapiblock" ></div>
+
+<div class="form-actions">
+  <%= link_to "Volver",
+              locations_path, :class => 'btn'  %>
+ 
+</div>
+
+<br/>
+
+<script type="text/javascript">
+
+function requestAroundLatLong(lat,lng,km){
+
+ // angle per km = 360 / (2 * pi * 6378) = 0.0089833458
+
+ var angle=km* 0.0089833458;
+
+ var myRequest = new panoramio.PhotoRequest({
+
+  'rect': {'sw': {'lat': lat-angle, 'lng': lng-angle}, 'ne': {'lat': lat+angle, 'lng': lng+angle}}
+
+  });
+
+ return myRequest;
+
+ }
+
+
+var myRequest = new panoramio.PhotoRequest({
+  'tag': 'sunset',
+  'rect': {'sw': {'lat': -30, 'lng': 10.5}, 'ne': {'lat': 50.5, 'lng': 30}}
+});
+
+var myOptions = {
+  'width': 500,
+  'height': 400
+};
+
+var widget = new panoramio.PhotoWidget('wapiblock', requestAroundLatLong(<%= @place.latitude %>,<%= @place.longitude %>,0.1), myOptions);
+widget.setPosition(0);
+
+</script>

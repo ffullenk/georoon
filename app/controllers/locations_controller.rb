@@ -136,8 +136,13 @@ class LocationsController < ApplicationController
     # Search for nodes by xpath
     doc.xpath('//geoname').each do |geoname|
       name = geoname.at_xpath("toponymName").content
-      distance = geoname.at_xpath("distance").content
-      place = Place.new(:name=>name,:distance=>distance)
+      #distance = geoname.at_xpath("distance").content
+      latitude = geoname.at_xpath("lat").content
+      longitude = geoname.at_xpath("lng").content
+      id = geoname.at_xpath("geonameId").content
+      place = Place.find_or_initialize_by_id(:id=>id, :name=>name, :latitude=>latitude, :longitude=>longitude)
+      place.id = id
+      place.save!
       @places.push(place)
       
     end

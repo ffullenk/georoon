@@ -276,9 +276,12 @@
 <h3>Lugares cercanos</h3>
 <ul>
 <% for place in @places %>
-  <li><%=  place.name %> (<%= place.distance.to_f.round(2) %> kms)</li>
+  <li><%=  link_to  place.name, place %> (<%= @location.distance_from([place.latitude,place.longitude]).to_f.round(2) %> kms)</li>
 <% end %>
 </ul>
+
+<h3>Imágenes del sector</h3>
+<div id="wapiblock" ></div>
 
 <div class="form-actions">
   <%= link_to "Volver",
@@ -286,3 +289,33 @@
  
 </div>
 
+
+
+<script type="text/javascript">
+
+function requestAroundLatLong(lat,lng,km){
+
+ // angle per km = 360 / (2 * pi * 6378) = 0.0089833458
+
+ var angle=km* 0.0089833458;
+
+ var myRequest = new panoramio.PhotoRequest({
+
+  'rect': {'sw': {'lat': lat-angle, 'lng': lng-angle}, 'ne': {'lat': lat+angle, 'lng': lng+angle}}
+
+  });
+
+ return myRequest;
+
+ }
+
+
+var myOptions = {
+  'width': 500,
+  'height': 400
+};
+
+var widget = new panoramio.PhotoWidget('wapiblock', requestAroundLatLong(<%= @location.latitude %>,<%= @location.longitude %>,0.1), myOptions);
+widget.setPosition(0);
+
+</script>

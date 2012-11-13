@@ -1,16 +1,9 @@
-class Place
+class Place < ActiveRecord::Base
+  attr_accessible :latitude, :longitude, :name
 
-attr_accessor :name, :distance
+  private
 
-
-def persisted?
-    false
+  def attributes_protected_by_default
+    []
   end
-
- def initialize(attributes = {})
-    attributes.each do |name, value|
-      send("#{name}=", value)
-    end
-  end
-
 end

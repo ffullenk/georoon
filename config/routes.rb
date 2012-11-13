@@ -2,6 +2,7 @@ Georoom::Application.routes.draw do
   devise_for :users
 
   resources :locations
+  resources :places
 
   root :to => "locations#index"
   
