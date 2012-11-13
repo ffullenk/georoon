@@ -168,6 +168,7 @@ GEM
       multi_json (~> 1.0, >= 1.0.2)
     warden (1.2.1)
       rack (>= 1.0)
+    yaml_db (0.2.3)
 
 PLATFORMS
   ruby
@@ -193,3 +194,4 @@ DEPENDENCIES
   therubyracer (>= 0.10.2)
   twitter-bootstrap-rails
   uglifier (>= 1.0.3)
+  yaml_db
