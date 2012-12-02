@@ -47,24 +47,46 @@ class LocationsController < ApplicationController
           session[:filtros][@filtro] = true
       end
     end
+
+
+     if params[:idPlace].present?
+      @filtro = params[:idPlace]
+        if !session[:filtros].has_key?(@filtro)
+       
+          session[:filtros][@filtro] = true
+      end
+    end
     
     @filtros = session[:filtros]
     
     return @filtros
   end
+
+
+
   
   def index
 
     
-    #@geopos = Geokit::Geocoders::MultiGeocoder.geocode("158.251.4.48")
-    @geopos = Geokit::Geocoders::MultiGeocoder.geocode(request.ip)
-    @locations = Location.near(@geopos.city, 10, :order => :distance)
+    @geopos = Geokit::Geocoders::MultiGeocoder.geocode("158.251.4.48")
+    #@geopos = Geokit::Geocoders::MultiGeocoder.geocode(request.ip)
+    @locations = Location.near(@geopos.city, 20, :order => :distance)
     
+    #agrega o quita filtros
     @filtros = ajustaFiltros
+
+    #agrega facetas para locaciones (amoblada...internet...)
     @facets = facetas(@locations, @filtros)
+
+    #selecciona locations que cumplan con los filtros
     @locations = filtraLocations(@locations, @filtros)
+
+
+    @places = places(@locations,@filtros)
     @precios = precios(@locations)
     @json = @locations.to_gmaps4rails
+
+    #campos (internet...amoblada...)
     @campos = self.campos
     logger.debug @facets
     respond_to do |format|
@@ -84,33 +106,35 @@ class LocationsController < ApplicationController
                flag = true
              else
                precio = location.precio
+
                if precio <50000 && key == "1"
                 flag = true
-               else
-                 if precio >= 50000 && precio <100000 && key == "2"
+               end
+
+               if precio >= 50000 && precio <100000 && key == "2"
                   flag = true
-                  else
-                     if precio >= 100000 && precio <150000 && key == "3"
-                        flag = true
-                     else
-                       if precio >= 150000 && precio <200000 && key == "4"
-                        flag = true
-                        else
-                           if precio >=200000 && key == "5"
-                              flag = true
-                            else
-                              flag = false
-                           end
-                       end
-                     end
+               end
+               if precio >= 100000 && precio <150000 && key == "3"
+                  flag = true
+               end
+               if precio >= 150000 && precio <200000 && key == "4"
+                  flag = true
+               end
+              if precio >=200000 && key == "5"
+                flag = true
+              end
+
+              if flag == false
+                  places = buscarPlacesCercanos(location)
+                  places.each do |place|
+                    if place.id == key.to_i
+                    flag = true
+                    end
                   end
               end
-              end    
-
-
              
-             
-         end
+              end
+      end
       if flag == true
         tmp.push(location)
       end
@@ -123,16 +147,13 @@ class LocationsController < ApplicationController
    return locations
   end
 
-  # GET /locations/1
-  # GET /locations/1.json
-  def show
-    @location = Location.find(params[:id])
-    @places = Gmaps4rails.places(@location.latitude,@location.longitude, 'AIzaSyB0VQ_kPLS7ReH8A1lxKAz5AM-5qkfeods',keyword = nil, 100, 'es', true)["results"]
 
-    url = 'http://api.geonames.org/findNearby?lat=' + @location.latitude.to_s + '&lng=' + @location.longitude.to_s + '&username=ffullenk&radius=10'
+  def buscarPlacesCercanos(location)
+
+     url = 'http://api.geonames.org/findNearby?lat=' + location.latitude.to_s + '&lng=' + location.longitude.to_s + '&username=ffullenk&radius=10'
     doc = Nokogiri::XML(open(url))
 
-    @places = []
+    places = []
     # Search for nodes by xpath
     doc.xpath('//geoname').each do |geoname|
       name = geoname.at_xpath("toponymName").content
@@ -143,13 +164,45 @@ class LocationsController < ApplicationController
       place = Place.find_or_initialize_by_id(:id=>id, :name=>name, :latitude=>latitude, :longitude=>longitude)
       place.id = id
       place.save!
-      @places.push(place)
+      places.push(place)
       
     end
-  #= Gmaps4rails.places(@location.latitude,@location.longitude, "AIzaSyB0VQ_kPLS7ReH8A1lxKAz5AM-5qkfeods")
+
+    return places
+
+
+  end
+
+
+  def show
+    @location = Location.find(params[:id])
+    #@places = Gmaps4rails.places(@location.latitude,@location.longitude, 'AIzaSyB0VQ_kPLS7ReH8A1lxKAz5AM-5qkfeods',keyword = nil, 100, 'es', true)["results"]
+
+
+    @places = buscarPlacesCercanos(@location)
 
     
   end
+
+   def places(locations,filtros)
+      lugaresCercanos = Hash.new(0)
+     
+    locations.each do |location|
+      places = buscarPlacesCercanos(location)
+        places.each do |place|
+
+          if !filtros.has_key? (place.id.to_s)
+         
+            lugaresCercanos[place.id] += 1
+          end
+        end
+    end
+
+    return lugaresCercanos
+
+  end
+
+
   
   def precios(locations)
     @precios = Hash.new(0)

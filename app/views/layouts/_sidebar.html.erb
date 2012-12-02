@@ -7,17 +7,39 @@
               <li class="nav-header">Filtros</li>
               
               <% if @filtros.count >0 %>
-				<% @filtros.each do |key, value| %>
-						<% if ["1","2","3","4","5"].include?(key)%>
-							<a href="<%= url_for locations_path(:rmv => key)  %>" class="btn btn-inverse btn-small"><i class="icon-remove-sign "></i> <%= value %></a>
-						<% else%>
-							<% if @campos.include?(key)%>
-						<a href="<%= url_for locations_path(:rmv => key)  %>" class="btn btn-inverse btn-small"><i class="icon-remove-sign "></i> <%= @campos[key] %></a>
-						<%end%>
+
+
+				      <% @filtros.each do |key, value| %>
+						      <% if ["1","2","3","4","5"].include?(key)%>
+							     <a href="<%= url_for locations_path(:rmv => key)  %>" class="btn btn-inverse btn-small">
+                    <i class="icon-remove-sign "></i> <%= value %>
+                     </a>
+
+
+
+						      <% else %>
+							     <% if @campos.include?(key)%>
+						        <a href="<%= url_for locations_path(:rmv => key)  %>" class="btn btn-inverse btn-small">
+                       <i class="icon-remove-sign "></i> <%= @campos[key] %>
+                    </a>
+                     <% else %>
+
+                       <a href="<%= url_for locations_path(:rmv => key)  %>" class="btn btn-inverse btn-small">
+                         <i class="icon-remove-sign "></i> <%= Place.find_by_id(key).name %>
+                     </a>
+
+						      <%end%>
+
+
 						<%end%>
 						<br/>
 					<%end%>
+
+
 				<%end%>
+
+
+
 				<li class="divider"></li>
 
                <% @facets.each do |key, value| %>
@@ -51,8 +73,23 @@
               			<%end%>
               		
               		<%end%>
+
+                  <li class="divider"></li>  
+               <li class="nav-header">Cerca de</li>  
+                
+                <% @places.each do  |key, value| %>
+                  
+                 
+                      <li><%= link_to Place.find_by_id(key).name + " ("+ value.to_s+")", locations_path(:idPlace => key) %></li>
+                    
+                    
+                   
+                  
+                  <%end%>
             
             </ul>
+
+
           </div><!--/.well -->
         </div><!--/span-->
       	<%end%>  
