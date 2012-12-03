@@ -31,6 +31,7 @@ GEM
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
     builder (3.0.4)
+    cocaine (0.4.2)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -100,6 +101,12 @@ GEM
     options (2.3.0)
       fattr
     orm_adapter (0.4.0)
+    paperclip (3.3.1)
+      activemodel (>= 3.0.0)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      cocaine (~> 0.4.0)
+      mime-types
     pg (0.14.1)
     polyglot (0.3.3)
     progress_bar (0.4.0)
@@ -132,6 +139,7 @@ GEM
       json (~> 1.4)
     rest-client (1.6.7)
       mime-types (>= 1.16)
+    rmagick (2.13.1)
     sass (3.2.1)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
@@ -188,9 +196,11 @@ DEPENDENCIES
   oauth2
   omniauth
   omniauth-facebook
+  paperclip
   pg
   progress_bar
   rails
+  rmagick
   sass-rails (~> 3.2.3)
   simple_form
   sqlite3

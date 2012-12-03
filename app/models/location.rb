@@ -6,13 +6,14 @@ class Location < ActiveRecord::Base
   attr_accessible :address, :amueblada, :ascensor, :balconpatio, :banioprivado,
                   :city, :cocina, :detalle, :estacionamiento, :gimnasio, :gmaps,
                   :internet, :latitude, :lavadora, :longitude, :portero, :telefono, :tpieza_id, :tvcable,
-                  :precio, :user
+                  :precio, :user, :image
   acts_as_gmappable :callback => :save_city
   
   geocoded_by :address   # can also be an IP address
   after_validation :geocode, :if => :address_changed?
   validates_presence_of :address, :precio
-
+  validates_presence_of :image, :size => { :in => 0..2048.kilobytes }
+  has_attached_file :image, :styles => { :medium => "300x300>", :thumb => "100x100>" }
     
   
   
@@ -25,9 +26,13 @@ class Location < ActiveRecord::Base
   "#{self.address}" 
   end
   def gmaps4rails_infowindow
-      
+      if self.image
+     "<a href=\"#{self.url}\"> #{self.address} <br/> <img src=\"#{self.image.url}\" width=\"150\" height=\"150\">"
+   else
      "<a href=\"#{self.url}\"> #{self.address}"
   end
+
+end
   
   def geocode?
   (!address.blank? && (lat.blank? || lng.blank?)) || address_changed?

@@ -258,6 +258,13 @@
 <br/>
 <div class="fb-comments" data-href=<%= location_url(@location)%> data-num-posts="4" data-width="470"></div>
 <br/>
+
+<%if @location.image %>
+<h3>Foto</h3>
+<%= image_tag @location.image.url %>
+<% end %>
+
+
 <dl class="">
 
 <%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@location.latitude}%2C#{@location.longitude}", :class=> "img-polaroid" %>
