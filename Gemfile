@@ -32,3 +32,5 @@ gem 'geokit-rails3'
 gem 'nokogiri'
 gem "taps"
 gem 'yaml_db'
+
+gem 'simple_form'

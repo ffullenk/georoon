@@ -1,0 +1,31 @@
+
+<%= simple_form_for(@location, :html => {:class => 'form-horizontal' }) do |f| %>
+
+ <%= f.input :address, :label => 'Dirección', :input_html => { :class => "span6" }, :hint => "Ej: Av. España 1433, Valparaíso" %>
+ <%= f.input :precio %>
+    <%= f.association :tpieza , :label => 'Tipo de Habitación', :include_blank => false, :label_method => :nombre %>
+
+
+ <%= f.input :internet ,:as => :boolean %>
+ <%= f.input :lavadora, :as => :boolean%>
+ <%= f.input :cocina, :as => :boolean %>
+ <%= f.input :tvcable, :label => 'Tv Cable', :as => :boolean%>
+
+ <%= f.input :banioprivado, :label => 'Baño privado',:as => :boolean %>
+  <%= f.input :amueblada, :label => 'Amoblado',:as => :boolean%>
+ <%= f.input :portero,:as => :boolean%>
+  <%= f.input :estacionamiento,:as => :boolean%>
+
+
+   <%= f.input :balconpatio , :label => 'Balcón / Patio',:as => :boolean%>
+  <%= f.input :gimnasio,:as => :boolean %>
+   <%= f.input :ascensor,:as => :boolean %>
+  <%= f.input :telefono , :label => 'Teléfono',:as => :boolean%>
+
+    <%=f.input :detalle, :input_html => { :class => "span6" }%>
+
+    <div class="form-actions">
+  <%= f.button :submit ,'Enviar' , :class => 'btn btn-primary' %>
+   <%= link_to "Cancelar", locations_path, :class => 'btn' %>
+  </div>
+<% end %>

@@ -1,7 +1,7 @@
 
 class Location < ActiveRecord::Base
   delegate :url_helpers, to: 'Rails.application.routes' 
-  has_one :tpieza
+  belongs_to :tpieza
   belongs_to :user
   attr_accessible :address, :amueblada, :ascensor, :balconpatio, :banioprivado,
                   :city, :cocina, :detalle, :estacionamiento, :gimnasio, :gmaps,
@@ -11,6 +11,7 @@ class Location < ActiveRecord::Base
   
   geocoded_by :address   # can also be an IP address
   after_validation :geocode, :if => :address_changed?
+  validates_presence_of :address, :precio
 
     
   
