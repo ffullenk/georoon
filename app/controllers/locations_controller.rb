@@ -14,6 +14,7 @@ class LocationsController < ApplicationController
     @filtros = ajustaFiltros
     @precios = precios(@locations)
     @campos = self.campos
+    @places = places(@locations,@filtros)
     @facets = facetas(@locations, @filtros)
     @json = @locations.to_gmaps4rails
   end
